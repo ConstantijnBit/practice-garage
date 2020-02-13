@@ -3,29 +3,18 @@ import Vuex from 'vuex'
 
 Vue.use(Vuex)
 
-
+// Store used for the "car" app section, not "garages"
 export default new Vuex.Store({
     state: {
         msg: 'Welcome to Your Appengine/Vue app the garage',
-        garageList: [],
-        garage: {
-            name: '',
-            brand: '',
-            postal_country: ''
-        },
-        updated_garage: {},
-        editing: false,
-        myGarage: {}
+        carlist: []
     },
-    mutations: {},
-    actions: {
-        load() {},
-        save() {},
-        resetForm() {},
-        deleteGarage() {},
-        refresh() {},
-        garage() {},
-        saveEdit() {}
+    mutations: {
+        save(state, payload) {
+            state.carlist.push({...payload})
+            console.log(state.carlist)
+        }
     },
+    actions: {},
     getters: {}
 })

@@ -3,13 +3,15 @@ import VueRouter from 'vue-router'
 
 import Home from './components/Home'
 import Garages from './components/garagelist'
+import Cars from './components/cars/cars'
 
 Vue.use(VueRouter)
 
 
 const routes = [
     { path: '/', name: 'home', component: Home },
-    { path: '/garages', name: 'garages', component: Garages }
+    { path: '/garages', name: 'garages', component: Garages },
+    { path: '/cars', name: 'cars', component: Cars }
 ]
 
 

@@ -21,10 +21,11 @@ from shared.system import datastore
 from shared.model.car import Car
 from shared.model.garage import Garage
 from google.cloud import ndb
-from app.handlers import garages
+from app.handlers import garages, cars
 
 app = Flask(__name__)
 app.register_blueprint(garages.bp)
+app.register_blueprint(cars.bp)
 
 
 

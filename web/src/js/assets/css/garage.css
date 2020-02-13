@@ -21,10 +21,3 @@ ul {
     min-height: 1px;
     margin-bottom: 1rem;
 }
-
-/* bootstrap css 'disabled' does not work??? */
-.card a.disabled {
-    color: darkgray;
-    pointer-events: none;
-    cursor: not-allowed;
-}

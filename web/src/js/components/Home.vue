@@ -13,6 +13,7 @@
         <div class="row">
             <div class="col-sm-12 text-center margin-top">
                 <router-link :to="{ name: 'garages' }" tag="a" class="btn btn-primary">Garages</router-link>
+                <router-link :to="{ name: 'cars' }" tag="a" class="btn btn-primary">Cars</router-link>
             </div>
         </div>
     </div>

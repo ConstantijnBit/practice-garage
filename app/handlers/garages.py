@@ -8,6 +8,7 @@ bp = Blueprint(name='garages', import_name=__name__, url_prefix='/garages')
 @bp.route('/', methods=["GET"])
 def garage_list():
     print(request.args)
+    # import pdb; pdb.set_trace()
     if request.args and 'garage' in request.args:
         garage = Garage.get(key=request.args.get('garage'))
         return jsonify({
