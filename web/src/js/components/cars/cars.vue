@@ -7,21 +7,21 @@
             <div class="col-sm-6 line">
                 <form>
                     <div class="form-group">
-                        <label for="kenteken">Kenteken</label>
-                        <input type="text" id="kenteken" class="form-control text-uppercase" placeholder="X-999-XX" v-model="car.kenteken">
+                        <label>Kenteken</label>
+                        <input type="text" class="form-control text-uppercase" placeholder="X-999-XX" v-model="local.plate">
                     </div>
                     <div class="form-group">
-                        <label for="merk">Merk</label>
-                        <input type="text" id="merk" class="form-control" placeholder="Name" v-model="car.merk">
+                        <label>Merk</label>
+                        <input type="text" class="form-control" placeholder="Name" v-model="local.brand">
                     </div>
                     <div class="form-group">
-                        <label for="kleur">Kleur</label>
-                        <input type="text" id="kleur" class="form-control" placeholder="Colorful" v-model="car.kleur">
+                        <label>Kleur</label>
+                        <input type="text" class="form-control" placeholder="Colorful" v-model="local.color">
                     </div>
                     <div class="form-group">
                         <div class="form-check">
-                            <input type="checkbox" value="" id="checkbox" class="form-check-input" @change="car.garage = !car.garage">
-                            <label for="checkbox" class="form-check-label">In garage</label>
+                            <input type="checkbox" class="form-check-input" :checked="local.garage" @change="local.garage = !local.garage">
+                            <label class="form-check-label">In garage</label>
                         </div>
                     </div>
                     <div class="form-group">
@@ -30,9 +30,9 @@
                 </form>
             </div>
             <div class="col-sm-6">
-                <div v-for="(car, index) in this.$store.state.carlist" :key="car.id">
-                    <car-component :index="index"></car-component>
-                </div>
+                <transition-group name="card-deck">
+                        <car-component v-for="car in this.$store.getters.load" :key="car.id" :id="car.id"></car-component>
+                </transition-group>
             </div>
         </div>
     </div>
@@ -47,17 +47,28 @@ export default {
     },
     data() {
         return {
-            car: {
-                kenteken: '',
-                merk: '',
-                kleur: '',
+            local: {
+                plate: '',
+                brand: '',
+                color: '',
                 garage: false
             }
         }
     },
     methods: {
         save() {
-            this.$store.commit('save', this.car)
+            this.$store.commit('add', this.local)
+            this.reset()
+
+        },
+        reset() {
+            const reset = {
+                plate: '',
+                brand: '',
+                color: '',
+                garage: false
+            }
+            Object.assign(this.local, reset)
         }
     }
 }
