@@ -4,8 +4,11 @@ from google.cloud import ndb
 
 
 class Car(BaseModel):
-    garage = HBKeyProperty()
+    car = HBKeyProperty()
+    plate = ndb.StringProperty()
     brand = ndb.StringProperty()
+    color = ndb.StringProperty()
+    id = ndb.StringProperty()
 
     license_plate = ndb.StringProperty()
 
@@ -14,7 +17,7 @@ class Car(BaseModel):
         cars = list()
         with cls.ndb_context():
             q = cls.query()
-            if garage:
-                q = q.filter(cls.garage==garage.key)
+            if car:
+                q = q.filter(cls.car==car.key)
             cars = q.fetch()
         return cars
