@@ -1,21 +1,38 @@
 <template>
-	<div class="container-margin-top">
-		<div class="row">
-			<div class="col-sm-12 text-center">
-				<h1>Garages</h1>
+	<div>
+		<nav class="navbar navbar-light bg-light">
+			<ul class="navbar-nav">
+				<li class="nav-item">
+					<router-link to="/" tag="a" class="nav-link">&larr; Back to Home</router-link>
+				</li>
+			</ul>
+		</nav>
+		<span class="spacer"></span>
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-12 text-center">
+					<h2>Garages</h2>
+				</div>
 			</div>
-		</div>
-		<div class="row margin-top">
-			<div class="col-sm-4">
+			<span class="spacer"></span>
+			<div class="row justify-content-sm-center">
 				<new-garage @change="garageList = $event"></new-garage>
 			</div>
-			<div class="col-sm-8">
-				<transition-group name="fade" tag="ul">
-					<li v-for="item in garageList" :key="item.id">
-						<!-- when a garage item is deleted it will raise change event and return the new list -->
+			<span class="spacer"></span>
+			<div class="row">
+				<table class="table table-borderless table-hover">
+					<thead class="thead-dark">
+						<tr class="d-flex">
+							<th class="col-3" scope="col">Name</th>
+							<th class="col-3" scope="col">Brand</th>
+							<th class="col-3" scope="col">Country</th>
+							<th class="col-3" scope="col">id#</th>
+						</tr>
+					</thead>
+					<tbody v-for="item in garageList" :key="item.id">
 						<garage-list-item :garage="item" @change="garageList = $event"></garage-list-item>
-					</li>
-				</transition-group>
+					</tbody>
+				</table>
 			</div>
 		</div>
 	</div>
@@ -44,10 +61,7 @@
 					contentType: 'application/json',
 					timeout: 60000
 				}).then((data) => {
-					console.log(data)
 					this.garageList = data
-				}).always(() => {
-					// this.loading = false
 				})
 			}
 		},

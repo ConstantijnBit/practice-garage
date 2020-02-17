@@ -30,11 +30,7 @@ export default new Vuex.Store({
             })
         }
     },
-    actions: {
-        // no need for sessionstorage because of server
-        updateSessionStorage() {},
-        loadSessionStorage() {}
-    },
+    actions: {},
     getters: {
         load: (state) => {
             return state.carlist

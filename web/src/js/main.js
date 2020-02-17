@@ -5,13 +5,11 @@ import App from './App'
 import router from './routes'
 import store from './store'
 
-// import stylesheets
-// import './assets/css/main.css'
+import 'bootstrap'
+import 'bootstrap/dist/css/bootstrap.min.css' // fallback for bootstrap-overwrite
+// import './assets/css/bootstrap-overwrite.scss'
 import './assets/css/garage.css'
 
-// Bootstrap with custom-colors scss
-import 'bootstrap'
-import './assets/css/bootstrap-overwrite.scss'
 
 Vue.config.productionTip = false
 

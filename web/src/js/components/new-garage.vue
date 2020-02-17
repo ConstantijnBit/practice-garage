@@ -1,31 +1,18 @@
 <template>
     <form>
-        <div class="form-group">
-            <div class="input-group">
-                <div class="input-group-prepend">
-                    <span class="input-group-text">Name</span>
-                </div>
-                <input type="text" id="name" class="form-control" v-model="garage.name">
+        <div class="form-row">
+            <div class="col">
+                <input type="text" class="form-control" placeholder="Garage name" v-model="garage.name">
             </div>
-        </div>
-        <div class="form-group">
-            <div class="input-group">
-                <div class="input-group-prepend">
-                    <span class="input-group-text">Brand</span>
-                </div>
-                <input type="text" id="brand" class="form-control" v-model="garage.brand">
+            <div class="col">
+                <input type="text" class="form-control" placeholder="Brand" v-model="garage.brand">
             </div>
-        </div>
-        <div class="form-group">
-            <div class="input-group">
-                <div class="input-group-prepend">
-                    <span class="input-group-text">Country</span>
-                </div>
-                <input type="text" id="country" class="form-control" v-model="garage.postal_country">
+            <div class="col">
+                <input type="text" class="form-control" placeholder="Country" v-model="garage.postal_country">
             </div>
-        </div>
-        <div class="form-group">
-            <button class="btn btn-success btn-block" @click.prevent="save">Save</button>
+            <div class="col">
+                <button class="btn btn-primary" @click.prevent="save">Add new garage</button>
+            </div>
         </div>
     </form>
 </template>
@@ -44,7 +31,6 @@
         },
         methods: {
             save() {
-                console.log(this.garage)
                 $.ajax({
                     type: 'POST',
                     url: `/garages/`,
@@ -54,8 +40,6 @@
                 }).then((data) => {
                     this.$emit('change', data)
                     this.resetForm()
-                }).always(() => {
-                    // this.loading = false
                 })
             },
             resetForm() {

@@ -47,38 +47,38 @@ export default {
     },
     data() {
         return {
-            local: {
-                plate: '',
-                brand: '',
-                color: '',
-                garage: false
-            }
+            // local: {
+            //     plate: '',
+            //     brand: '',
+            //     color: '',
+            //     garage: false
+            // }
         }
     },
     methods: {
-        save() {
-            this.$store.commit('add', this.local)
-            this.reset()
+        // save() {
+        //     this.$store.commit('add', this.local)
+        //     this.reset()
 
-        },
-        reset() {
-            const reset = {
-                plate: '',
-                brand: '',
-                color: '',
-                garage: false
-            }
-            Object.assign(this.local, reset)
-        }
+        // },
+        // reset() {
+        //     const reset = {
+        //         plate: '',
+        //         brand: '',
+        //         color: '',
+        //         garage: false
+        //     }
+        //     Object.assign(this.local, reset)
+        // }
     }
 }
 </script>
 
 <style scoped>
-    .heading {
+    /* .heading {
         padding: 2rem 0;
     }
     .line {
         border-right: 1px solid gray;
-    }
+    } */
 </style>

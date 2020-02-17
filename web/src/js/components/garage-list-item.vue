@@ -1,35 +1,29 @@
 <template>
-    <div>
-        <div class="card">
-            <div class="card-body">
-                <h5 class="card-title">{{ garage.name }}</h5>
-                <p class="card-subtitle text-muted">{{ garage.brand }}</p>
-                <p class="card-subtitle text-muted text-uppercase">{{ garage.postal_country }}</p>
-                <span></span>
-                <a href="#" class="card-link" @click.prevent="refresh">Refresh</a>
-                <template v-if="!editing">
-                    <a href="#" class="card-link" @click.prevent="editing = !editing">Edit</a>
-                    <a href="#" class="card-link text-danger" @click.prevent="deleteGarage">Delete</a>
-                </template>
-                <template v-else>
-                    <!-- <a href="#" class="card-link disabled" @click.prevent="save">Save</a> -->
-                    <a href="#" class="card-link text-danger" @click.prevent="editing = !editing; Object.assign(garage, updated_garage)">Cancel</a>
-                </template>
-            </div>
-            <transition name="fade" mode="out-in">
-                <garage-form v-if="editing" :garage="garage" @change="editing = false; Object.assign(updated_garage, garage)"></garage-form>
-            </transition>
-        </div>
-    </div>
+    <tr class="d-flex">
+        <template v-if="!editing">
+            <td class="col-3">
+                <router-link :to="{ query: { id: garage.id } }">{{ garage.name }}</router-link>
+            </td>
+            <td class="col-3">{{ garage.brand }}</td>
+            <td class="col-3">{{ garage.postal_country }}</td>
+            <td class="col-1 id-number">{{ garage.id }}</td>
+            <td class="col-1"><button class="btn btn-primary" @click.prevent="editing = !editing">Edit</button></td>
+            <td class="col-1"><button class="btn btn-danger" @click.prevent="deleteGarage">Delete</button></td>
+        </template>
+        <template v-else>
+            <td class="col-3"><input type="text" class="form-control form-control-sm" v-model="garage.name"></td>
+            <td class="col-3"><input type="text" class="form-control form-control-sm" v-model="garage.brand"></td>
+            <td class="col-3"><input type="text" class="form-control form-control-sm" v-model="garage.postal_country"></td>
+            <td class="col-1 id-number">{{ garage.id }}</td>
+            <td class="col-1"><button class="btn btn-success" @click.prevent="save">Save</button></td>
+            <td class="col-1"><button class="btn btn-danger" @click.prevent="cancel">Cancel</button></td>
+        </template>
+    </tr>
 </template>
 
 <script>
-    import GarageForm from "./garage-form";
     export default {
         name: "garage-list-item",
-        components: {
-            'garage-form': GarageForm
-        },
         props: {
             garage: {
                 type: Object,
@@ -38,27 +32,14 @@
         },
         data() {
             return {
-                updated_garage: {},
+                backup_garage: {},
                 editing: false
             }
         },
         mounted() {
-            this.updated_garage = Object.assign({}, this.garage)
+            this.backup_garage = Object.assign({}, this.garage)
         },
         methods: {
-            // save() {
-            //     this.editing = false
-            //     $.ajax({
-            //         type: 'PUT',
-            //         contentType: 'application/json',
-            //         url: `/garages/`,
-            //         data: JSON.stringify(this.garage)
-            //     }).then((data) => {
-            //         // this.$emit('change', data)
-            //         Object.assign(this.updated_garage, this.garage)
-            //     }).always(() => {
-            //     })
-            // },
             deleteGarage() {
                 $.ajax({
                     type: 'DELETE',
@@ -67,26 +48,25 @@
                     data: JSON.stringify({'garage': this.garage.id})
                 }).then((data) => {
                     this.$emit('change', data)
-                }).always(() => {
+                    Object.assign(this.backup_garage, this.garage)
                 })
             },
-            refresh() {
+            save() {
                 $.ajax({
-                    type: 'GET',
-                    contentType: 'application/json',
-                    url: `/garages/?garage=${this.garage.id}`,
-                }).then((data) => {
-                    console.log(data)
-                    Object.assign(this.garage, data) // watch does not work this way then we need to use deep watch
-                    Object.assign(this.updated_garage, this.garage)
-                }).always(() => {
+					type: this.garage.id ? 'PUT' : 'POST',
+					url: `/garages/`,
+					contentType: 'application/json',
+                    data: JSON.stringify(this.garage),
+					timeout: 2000
+				}).then((data) => {
+                    this.$emit('change', data)
+                    Object.assign(this.backup_garage, this.garage)
                 })
-            }
-        },
-        watch: {
-            garage(g) {
-                console.log('garage update:' + g)
-                Object.assign(this.updated_garage, g)
+                this.editing = !this.editing
+            },
+            cancel() {
+                Object.assign(this.garage, this.backup_garage)
+                this.editing = !this.editing
             }
         }
     }

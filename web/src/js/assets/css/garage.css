@@ -28,42 +28,20 @@
     }
 }
 
-
-.card-deck-enter-active,
-.card-deck-leave-active {
-    transition: all 150ms ease;
-}
-.card-deck-enter,
-.card-deck-leave-to {
-    opacity: 0;
-}
-
-
-
-body {
-    overflow-y: scroll;
-}
-
-ul {
-    list-style: none;
-}
-
-.container-margin-top {
-    margin-top: 10vh;
-}
-
-.margin-top {
-    margin-top: 2rem;
-}
-
-
-/* bootstrap css */
-.card-body span {
+span.spacer {
     display: block;
-    min-height: 1px;
-    margin-bottom: 1rem;
+    height: 24px;
 }
 
-.card {
-    margin-bottom: 1rem;
+.id-number::before {
+    content: "id#";
+    display: inline-block;
+    color: darkgray;
+}
+
+.table td {
+    vertical-align: middle;
+}
+.table tr {
+    align-items: center;
 }
