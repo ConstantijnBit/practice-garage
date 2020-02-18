@@ -5,7 +5,7 @@ import Home from './components/Home'
 // import Garages from './components/garagelist'
 // import Cars from './components/cars/cars'
 import Garages from './components/garage/garages'
-import Garage from './components/garage/garage'
+import Cars from './components/garage/cars'
 
 
 Vue.use(VueRouter)
@@ -16,7 +16,7 @@ const routes = [
     // { path: '/garages', component: Garages },
     // { path: '/cars', component: Cars }
     { path: '/garages', name: 'garages', component: Garages },
-    { path: '/garages/:name', name: 'garage', component: Garage }
+    { path: '/cars/:name', name: 'garage', component: Cars }
 ]
 
 

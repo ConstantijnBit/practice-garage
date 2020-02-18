@@ -70,17 +70,21 @@ export default {
             console.log('content loaded')
         },
         add_garage() {
-            $.ajax({
-                type: 'POST',
-                url: '/garages/',
-                contentType: 'application/json',
-                data: JSON.stringify(this.new_garage),
-                timeout: 2000
-            }).then((data) => {
-                Object.assign(this.garage_list, data)
-                this.reset_form()
-            })
-            console.log('garage added')
+            if (!this.new_garage.name || !this.new_garage.brand || !this.new_garage.postal_country) {
+                console.log('No valid input')
+            } else {
+                $.ajax({
+                    type: 'POST',
+                    url: '/garages/',
+                    contentType: 'application/json',
+                    data: JSON.stringify(this.new_garage),
+                    timeout: 2000
+                }).then((data) => {
+                    Object.assign(this.garage_list, data)
+                    this.reset_form()
+                })
+                console.log('garage added')
+            }
         },
         reset_form() {
             const reset = {

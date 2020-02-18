@@ -41,14 +41,14 @@
                 </tr>
             </thead>
             <tbody>
-                <garage-list v-for="car in car_list" :key="car.id" :car="car" @change="car_list = $event"></garage-list>
+                <cars-list v-for="car in car_list" :key="car.id" :car="car" @change="car_list = $event"></cars-list>
             </tbody>
         </table>
     </div>
 </template>
 
 <script>
-import garage_list from './garage-list'
+import cars_list from './cars-list'
 
 export default {
     data() {
@@ -64,7 +64,7 @@ export default {
         }
     },
     components: {
-        'garage-list': garage_list
+        'cars-list': cars_list
     },
     methods: {
         load() {
@@ -81,7 +81,7 @@ export default {
         add_car() {
             $.ajax({
                 type: 'POST',
-                url: '/car/',
+                url: '/cars/',
                 contentType: 'application/json',
                 data: JSON.stringify(this.new_car),
                 timeout: 2000
@@ -89,7 +89,7 @@ export default {
                 Object.assign(this.car_list, data)
                 this.reset_form()
             })
-            console.log('garage added')
+            console.log('car added')
         },
         reset_form() {
             const reset = {

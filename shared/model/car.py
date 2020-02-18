@@ -1,10 +1,10 @@
-from shared.system.base.model import BaseModel #, HBKeyProperty
+from shared.system.base.model import BaseModel, HBKeyProperty
 from google.cloud import ndb
 
 
 
 class Car(BaseModel):
-    # car = HBKeyProperty() # ???
+    car = HBKeyProperty() # ???
     id = ndb.StringProperty()
     license_plate = ndb.StringProperty()
     brand = ndb.StringProperty()
@@ -13,9 +13,11 @@ class Car(BaseModel):
     garage_id = ndb.StringProperty()
 
     @classmethod
-    def list(cls, id=None, license_plate=None, brand=None, color=None, storage=False, garage_id=None, limit=20):
+    def list(cls, car=None, id=None, license_plate=None, brand=None, color=None, storage=False, garage_id=None, limit=20):
         query = Car.query()
-        if id:
+        if car:
+            query = query.filter(Car.id == car)
+        elif id:
             query = query.filter(Car.id == id)
         elif license_plate:
             query = query.filter(Car.license_plate == license_plate)
@@ -30,11 +32,3 @@ class Car(BaseModel):
         if limit:
             return query.fetch(limit)
         return query.fetch()
-    # def list(cls, garage=None):
-    #     cars = list()
-    #     with cls.ndb_context():
-    #         q = cls.query()
-    #         if car:
-    #             q = q.filter(cls.car==car.key)
-    #         cars = q.fetch()
-    #     return cars

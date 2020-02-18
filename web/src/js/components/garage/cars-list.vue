@@ -56,9 +56,9 @@ export default {
             }).then((data) => {
                 this.editing = !this.editing
             })
-            console.log('garage saved')
+            console.log('car saved')
         },
-        delete_garage(car) {
+        delete_car(car) {
             $.ajax({
                 type: 'DELETE',
                 url: '/cars/',
