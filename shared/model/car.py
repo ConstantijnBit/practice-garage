@@ -1,23 +1,40 @@
-from shared.system.base.model import BaseModel, HBKeyProperty
+from shared.system.base.model import BaseModel #, HBKeyProperty
 from google.cloud import ndb
 
 
 
 class Car(BaseModel):
-    car = HBKeyProperty()
-    plate = ndb.StringProperty()
+    # car = HBKeyProperty() # ???
+    id = ndb.StringProperty()
+    license_plate = ndb.StringProperty()
     brand = ndb.StringProperty()
     color = ndb.StringProperty()
-    id = ndb.StringProperty()
-
-    license_plate = ndb.StringProperty()
+    storage = ndb.BooleanProperty()
+    garage_id = ndb.StringProperty()
 
     @classmethod
-    def list(cls, garage=None):
-        cars = list()
-        with cls.ndb_context():
-            q = cls.query()
-            if car:
-                q = q.filter(cls.car==car.key)
-            cars = q.fetch()
-        return cars
+    def list(cls, id=None, license_plate=None, brand=None, color=None, storage=False, garage_id=None, limit=20):
+        query = Car.query()
+        if id:
+            query = query.filter(Car.id == id)
+        elif license_plate:
+            query = query.filter(Car.license_plate == license_plate)
+        elif brand:
+            query = query.filter(Car.brand == brand)
+        elif color:
+            query = query.filter(Car.color == color)
+        elif storage:
+            query = query.filter(Car.storage == storage)
+        elif garage_id:
+            query = query.filter(Car.garage_id == garage_id)
+        if limit:
+            return query.fetch(limit)
+        return query.fetch()
+    # def list(cls, garage=None):
+    #     cars = list()
+    #     with cls.ndb_context():
+    #         q = cls.query()
+    #         if car:
+    #             q = q.filter(cls.car==car.key)
+    #         cars = q.fetch()
+    #     return cars

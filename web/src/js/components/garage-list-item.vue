@@ -2,7 +2,7 @@
     <tr class="d-flex">
         <template v-if="!editing">
             <td class="col-3">
-                <router-link :to="{ query: { id: garage.id } }">{{ garage.name }}</router-link>
+                <router-link to="/cars">{{ garage.name }}</router-link>
             </td>
             <td class="col-3">{{ garage.brand }}</td>
             <td class="col-3">{{ garage.postal_country }}</td>

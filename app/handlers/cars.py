@@ -11,19 +11,21 @@ def car_list():
         car = Car.get(key=request.args.get('car'))
         return jsonify({
             'id': car.id,
-            'plate': car.plate,
+            'license_plate': car.license_plate,
             'brand': car.brand,
             'color': car.color,
-            'garage': car.garage
+            'storage': car.storage,
+            'garage_id': car.garage_id
         })
     return jsonify(
         [
             {
                 'id': c.id,
-                'plate': c.plate,
+                'license_plate': c.license_plate,
                 'brand': c.brand,
                 'color': c.color,
-                'garage': c.garage
+                'storage': c.storage,
+                'garage_id': c.garage_id
             } for c in Car.list()
         ]
     )

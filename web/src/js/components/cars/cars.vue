@@ -1,5 +1,5 @@
 <template>
-    <div class="container">
+    <!-- <div class="container">
         <div class="heading">
             <h1>Cars</h1>
         </div>
@@ -35,7 +35,44 @@
                 </transition-group>
             </div>
         </div>
-    </div>
+    </div> -->
+    <div>
+		<nav class="navbar navbar-light bg-light">
+			<ul class="navbar-nav">
+				<li class="nav-item">
+					<router-link to="/garages" tag="a" class="nav-link">&larr; Back to Garages</router-link>
+				</li>
+			</ul>
+		</nav>
+		<span class="spacer"></span>
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-12 text-center">
+					<h2>Garages</h2>
+				</div>
+			</div>
+			<span class="spacer"></span>
+			<div class="row justify-content-sm-center">
+				<new-garage @change="garageList = $event"></new-garage>
+			</div>
+			<span class="spacer"></span>
+			<div class="row">
+				<table class="table table-borderless table-hover">
+					<thead class="thead-dark">
+						<tr class="d-flex">
+							<th class="col-3" scope="col">Name</th>
+							<th class="col-3" scope="col">Brand</th>
+							<th class="col-3" scope="col">Country</th>
+							<th class="col-3" scope="col">id#</th>
+						</tr>
+					</thead>
+					<tbody v-for="item in garageList" :key="item.id">
+						<garage-list-item :garage="item" @change="garageList = $event"></garage-list-item>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
 </template>
 
 <script>
@@ -45,14 +82,20 @@ export default {
     components: {
         'car-component': car
     },
+    props: {
+        garage: {
+            type: Object,
+            required: true
+        }
+    },
     data() {
         return {
-            // local: {
-            //     plate: '',
-            //     brand: '',
-            //     color: '',
-            //     garage: false
-            // }
+            local: {
+                plate: '',
+                brand: '',
+                color: '',
+                garage: false
+            }
         }
     },
     methods: {
