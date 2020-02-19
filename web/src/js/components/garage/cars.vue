@@ -59,7 +59,7 @@ export default {
                 brand: '',
                 color: '',
                 storage: false,
-                garage_id: this.$route.query.id
+                garage_id: parseInt(this.$route.query.id)
             }
         }
     },
@@ -70,13 +70,12 @@ export default {
         load() {
             $.ajax({
                 type: 'GET',
-                url: '/cars/',
+                url: `/garages/${this.$route.query.id}/cars`,
                 contentType: 'application/json',
                 timeout: 60000
-            }).then((data) => {
-                this.car_list = data.filter(car => car.garage_id === parseInt(this.$route.query.id))
+            }).then(data => {
+                this.car_list = data
             })
-            console.log('content loaded')
         },
         add_car() {
             $.ajax({
@@ -85,11 +84,10 @@ export default {
                 contentType: 'application/json',
                 data: JSON.stringify(this.new_car),
                 timeout: 2000
-            }).then((data) => {
+            }).then(data => {
                 Object.assign(this.car_list, data)
                 this.reset_form()
             })
-            console.log('car added')
         },
         reset_form() {
             const reset = {
@@ -99,11 +97,9 @@ export default {
                 storage: false
             }
             Object.assign(this.new_car, reset)
-            console.log('form reset')
         }
     },
     created() {
-        console.log('page loaded')
         this.load()
     }
 }

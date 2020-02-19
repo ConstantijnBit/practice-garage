@@ -2,6 +2,7 @@
     <tr class="d-flex">
         <template v-if="!editing">
             <td class="col-2"><router-link :to="{ name: 'garage', params: { name: garage.name }, query: { id: garage.id } }">{{ garage.name }}</router-link></td>
+            <!-- <td class="col-2"><router-link :to="{ name: 'garage', params: { garage_id: garage.id } }">{{ garage.name }}</router-link></td> -->
             <td class="col-2">{{ garage.brand }}</td>
             <td class="col-2">{{ garage.postal_country }}</td>
             <td class="col-4 id-number">{{ garage.id }}</td>
@@ -40,7 +41,7 @@ export default {
                 url: '/garages/',
                 contentType: 'application/json',
                 timeout: 60000
-            }).then((data) => {
+            }).then(data => {
                 this.$emit('change', data)
             })
         },
@@ -51,10 +52,9 @@ export default {
                 contentType: 'application/json',
                 data: JSON.stringify(garage),
                 timeout: 2000
-            }).then((data) => {
+            }).then(data => {
                 this.editing = !this.editing
             })
-            console.log('garage saved')
         },
         delete_garage(garage) {
             $.ajax({
@@ -62,20 +62,17 @@ export default {
                 url: '/garages/',
                 contentType: 'application/json',
                 data: JSON.stringify({'garage': garage.id})
-            }).then((data) => {
+            }).then(data => {
                 this.load()
             })
-            console.log('garage deleted')
         },
         start_edit(garage) {
             Object.assign(this.backup_garage, garage)
             this.editing =! this.editing
-            console.log('start editing garage')
         },
         cancel_edit(garage) {
             Object.assign(garage, this.backup_garage)
             this.editing =! this.editing
-            console.log('cancel editing garage')
         }
     }
 }

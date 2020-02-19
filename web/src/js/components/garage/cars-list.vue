@@ -11,9 +11,9 @@
         </template>
         <template v-else>
             <td class="col-2"><input type="text" class="form-control form-control-sm" v-model="car.license_plate"></td>
-            <td class="col-2">{{ car.brand }}</td>
+            <td class="col-2"><input type="text" class="form-control form-control-sm" :placeholder="car.brand" readonly></td>
             <td class="col-2"><input type="text" class="form-control form-control-sm" v-model="car.color"></td>
-            <td class="col-2">{{ car.storage }}</td>
+            <td class="col-2"><input type="text" class="form-control form-control-sm" v-model="car.storage"></td>
             <td class="col-2 id-number">{{ car.id }}</td>
             <td class="col-1"><button class="btn btn-primary" @click="save_car(car)">Save</button></td>
             <td class="col-1"><button class="btn btn-danger" @click="cancel_edit(car)">Cancel</button></td>
@@ -39,10 +39,10 @@ export default {
         load() {
             $.ajax({
                 type: 'GET',
-                url: '/cars/',
+                url: `/garages/${this.$route.query.id}/cars`,
                 contentType: 'application/json',
                 timeout: 60000
-            }).then((data) => {
+            }).then(data => {
                 this.$emit('change', data)
             })
         },
@@ -53,10 +53,9 @@ export default {
                 contentType: 'application/json',
                 data: JSON.stringify(car),
                 timeout: 2000
-            }).then((data) => {
+            }).then(data => {
                 this.editing = !this.editing
             })
-            console.log('car saved')
         },
         delete_car(car) {
             $.ajax({
@@ -64,20 +63,18 @@ export default {
                 url: '/cars/',
                 contentType: 'application/json',
                 data: JSON.stringify({'car': car.id})
-            }).then((data) => {
+            }).then(data => {
+                console.log(data)
                 this.load()
             })
-            console.log('car deleted')
         },
         start_edit(car) {
             Object.assign(this.backup_car, car)
             this.editing =! this.editing
-            console.log('start editing car')
         },
         cancel_edit(car) {
             Object.assign(car, this.backup_car)
             this.editing =! this.editing
-            console.log('cancel editing car')
         }
     }
 }

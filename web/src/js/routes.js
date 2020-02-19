@@ -17,6 +17,7 @@ const routes = [
     // { path: '/cars', component: Cars }
     { path: '/garages', name: 'garages', component: Garages },
     { path: '/cars/:name', name: 'garage', component: Cars }
+    // { path: '/garages/:garage_id/cars' }
 ]
 
 

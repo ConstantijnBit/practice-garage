@@ -64,27 +64,21 @@ export default {
                 url: '/garages/',
                 contentType: 'application/json',
                 timeout: 60000
-            }).then((data) => {
+            }).then(data => {
                 this.garage_list = data
             })
-            console.log('content loaded')
         },
         add_garage() {
-            if (!this.new_garage.name || !this.new_garage.brand || !this.new_garage.postal_country) {
-                console.log('No valid input')
-            } else {
-                $.ajax({
-                    type: 'POST',
-                    url: '/garages/',
-                    contentType: 'application/json',
-                    data: JSON.stringify(this.new_garage),
-                    timeout: 2000
-                }).then((data) => {
-                    Object.assign(this.garage_list, data)
-                    this.reset_form()
-                })
-                console.log('garage added')
-            }
+            $.ajax({
+                type: 'POST',
+                url: '/garages/',
+                contentType: 'application/json',
+                data: JSON.stringify(this.new_garage),
+                timeout: 2000
+            }).then(data => {
+                Object.assign(this.garage_list, data)
+                this.reset_form()
+            })
         },
         reset_form() {
             const reset = {
@@ -93,11 +87,9 @@ export default {
                 postal_country: ''
             }
             Object.assign(this.new_garage, reset)
-            console.log('form reset')
         }
     },
     created() {
-        console.log('page loaded')
         this.load()
     }
 }

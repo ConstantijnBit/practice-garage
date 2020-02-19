@@ -1,4 +1,5 @@
 from flask import Blueprint, abort, jsonify, request
+from shared.model.car import Car
 from shared.model.garage import Garage
 import logging
 
@@ -7,8 +8,6 @@ bp = Blueprint(name='garages', import_name=__name__, url_prefix='/garages')
 # @garages.route('/', defaults={'page': 'index'})
 @bp.route('/', methods=["GET"])
 def garage_list():
-    print(request.args)
-    # import pdb; pdb.set_trace()
     if request.args and 'garage' in request.args:
         garage = Garage.get(key=request.args.get('garage'))
         return jsonify({
@@ -39,7 +38,6 @@ def garage_add():
 def garage_update():
     props = request.json
     garage = Garage.get(key=props.pop('id'))
-    # print(garage)
     garage.update(props=props)
     return garage_list()
 
@@ -48,3 +46,20 @@ def garage_delete():
     garage = Garage.get(key=request.json.pop('garage'))
     garage.delete()
     return garage_list()
+
+@bp.route('/<int:garage_id>/cars', methods=["GET"])
+def get_garage_cars(garage_id):
+    garage = Garage.get(garage_id)
+
+    car_list = Car.list(garage)
+    return jsonify(
+        [
+            {
+                'id': c.id,
+                'license_plate': c.license_plate,
+                'brand': c.brand,
+                'color': c.color,
+                'storage': c.storage
+            } for c in car_list
+        ]
+    )
