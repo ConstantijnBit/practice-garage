@@ -64,7 +64,6 @@ export default {
                 contentType: 'application/json',
                 data: JSON.stringify({'car': car.id})
             }).then(data => {
-                console.log(data)
                 this.load()
             })
         },

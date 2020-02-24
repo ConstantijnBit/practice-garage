@@ -28,6 +28,24 @@
     }
 }
 
+.fade-fast-enter-active {
+    animation: fade-fast-in 100ms ease-in forwards;
+}
+
+.fade-fast-leave-active {
+    animation: fade-fast-out 100ms ease-out forwards;
+}
+
+@keyframes fade-fast-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes fade-fast-out {
+    from { opacity: 1; }
+    to { opacity: 0; }
+}
+
 span.spacer {
     display: block;
     height: 24px;
@@ -44,4 +62,11 @@ span.spacer {
 }
 .table tr {
     align-items: center;
+}
+
+
+.table .cell-overflow {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }

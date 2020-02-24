@@ -1,19 +1,18 @@
 <template>
     <div>
-      <nav-garage></nav-garage>
-      <transition name="fade" mode="out-in">
-        <router-view></router-view>
-      </transition>
+        <nav-bar></nav-bar>
+        <transition name="fade-fast" mode="out-in">
+            <router-view></router-view>
+        </transition>
     </div>
 </template>
 
 <script>
-    import nav from './components/garage/nav'
-    export default {
-      components: {
-        'nav-garage': nav
-      }
-    }
-</script>
+import Navbar from './components/final/Navbar'
 
-<style></style>
+export default {
+    components: {
+        'nav-bar': Navbar
+    }
+}
+</script>
