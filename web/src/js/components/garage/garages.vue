@@ -34,7 +34,14 @@
                 </tr>
             </thead>
             <tbody>
-                <garages-list v-for="garage in garage_list" :key="garage.id" :garage="garage" @change="garage_list = $event"></garages-list>
+                <template v-if="!empty_list">
+                    <garages-list v-for="garage in garage_list" :key="garage.id" :garage="garage" @change="garage_list = $event"></garages-list>
+                </template>
+                <template v-else>
+                    <tr>
+                        <td>No garages available...</td>
+                    </tr>
+                </template>
             </tbody>
         </table>
     </div>
@@ -56,6 +63,11 @@ export default {
     },
     components: {
         'garages-list': garages_list
+    },
+    computed: {
+        empty_list() {
+            return Object.keys(this.garage_list).length === 0
+        }
     },
     methods: {
         load() {

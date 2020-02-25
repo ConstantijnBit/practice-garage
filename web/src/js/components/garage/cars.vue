@@ -7,6 +7,12 @@
         </div>
         <span class="spacer"></span>
         <form>
+            <div class="form-row">
+                <div class="col-auto">
+                    <a href="javascript:;" @click="goback">&larr; Go Back</a>
+                    <span class="spacer"></span>
+                </div>
+            </div>
             <div class="form-row align-items-center">
                 <div class="col">
                     <input type="text" class="form-control" placeholder="License Plate" v-model="new_car.license_plate">
@@ -33,15 +39,22 @@
         <table class="table table-borderless table-hover">
             <thead class="thead-dark">
                 <tr class="d-flex">
-                    <th class="col-2" scope="col">Name</th>
+                    <th class="col-2" scope="col">License plate</th>
                     <th class="col-2" scope="col">Brand</th>
-                    <th class="col-2" scope="col">Country</th>
+                    <th class="col-2" scope="col">Color</th>
                     <th class="col-2" scope="col">In Storage</th>
                     <th class="col-4" scope="col">ID Number</th>
                 </tr>
             </thead>
             <tbody>
-                <cars-list v-for="car in car_list" :key="car.id" :car="car" @change="car_list = $event"></cars-list>
+                <template v-if="!empty_list">
+                    <cars-list v-for="car in car_list" :key="car.id" :car="car" @change="car_list = $event"></cars-list>
+                </template>
+                <template v-else>
+                    <tr>
+                        <td>No cars available...</td>
+                    </tr>
+                </template>
             </tbody>
         </table>
     </div>
@@ -65,6 +78,11 @@ export default {
     },
     components: {
         'cars-list': cars_list
+    },
+    computed: {
+        empty_list() {
+            return Object.keys(this.car_list).length === 0
+        }
     },
     methods: {
         load() {
@@ -97,6 +115,9 @@ export default {
                 storage: false
             }
             Object.assign(this.new_car, reset)
+        },
+        goback() {
+            this.$router.go(-1)
         }
     },
     created() {

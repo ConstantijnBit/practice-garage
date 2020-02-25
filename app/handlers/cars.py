@@ -35,10 +35,10 @@ def car_item(car):
 
 @bp.route('/', methods=['POST'])
 def car_add():
-    import pprint
-    pprint.pprint(request.json)
+    # import pprint
+    # pprint.pprint(request.json)
     garage = Garage.get(key=request.json.pop('garage_id'))
-    pprint.pprint(request.json)
+    # pprint.pprint(request.json)
     Car.add(props=request.json, garage=garage.key)
     return car_list(garage)
 

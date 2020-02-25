@@ -1,7 +1,7 @@
 <template>
     <tr class="d-flex">
         <template v-if="!editing">
-            <td class="col-2">{{ car.license_plate }}</td>
+            <td class="col-2"><router-link :to="{ name: 'car', params: { name: car.license_plate }, query: { id: car.id } }">{{ car.license_plate }}</router-link></td>
             <td class="col-2">{{ car.brand }}</td>
             <td class="col-2">{{ car.color }}</td>
             <td class="col-2">{{ car.storage }}</td>

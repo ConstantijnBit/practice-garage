@@ -31,7 +31,7 @@ def garage_list():
 @bp.route('/', methods=["POST"])
 def garage_add():
     logging.warning(request.json)
-    garage = Garage.add(props=request.json)
+    Garage.add(props=request.json)
     return garage_list()
 
 @bp.route('/', methods=["PUT"])
@@ -44,6 +44,9 @@ def garage_update():
 @bp.route('/', methods=["DELETE"])
 def garage_delete():
     garage = Garage.get(key=request.json.pop('garage'))
+    car_list = Car.list(garage)
+    for car in car_list:
+        car.delete()
     garage.delete()
     return garage_list()
 
